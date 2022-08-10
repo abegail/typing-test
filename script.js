@@ -3,6 +3,9 @@ const textArray = Array.from(text.textContent);
 const typedText = document.querySelector('#typed');
 const typedArray = [];
 
+let correctKeyStroke = 0;
+let incorrectKeyStroke = 0;
+
 window.addEventListener('keydown', checkKey);
 
 function checkKey(e) {
@@ -11,9 +14,13 @@ function checkKey(e) {
     if (e.key === textArray[0]) {
         playSound(true);
         updateDisplay(e.key);
+        correctKeyStroke++;
     } else {
         playSound(false);
+        incorrectKeyStroke++;
     }
+
+    if (textArray.length === 0) displayResults();
 }
 
 function playSound(matched) {
@@ -33,10 +40,11 @@ function updateDisplay(key) {
     typedArray.push(key);
     text.textContent = textArray.join('');
     typedText.textContent = typedArray.join('');
+}
 
-    if (textArray.length === 0) {
-        const message = document.querySelector('#testDone');
-        message.textContent = "Done!";
-        window.removeEventListener('keydown', checkKey);
-    }
+function displayResults() {
+    const message = document.querySelector('#testDone');
+    window.removeEventListener('keydown', checkKey);
+    const accuracy = Math.round((correctKeyStroke / (correctKeyStroke + incorrectKeyStroke)) * 100);
+    message.textContent = `Done! Accuracy: ${accuracy}%`;
 }

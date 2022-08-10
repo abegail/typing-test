@@ -23,8 +23,7 @@ span {
 }
 
 .textContainer {
-    display: flex;
-    white-space: pre-wrap;
+    display: inline;
     border: 2px solid turquoise;
     border-radius: 16px;
     padding: 30px;

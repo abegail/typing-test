@@ -28,6 +28,9 @@ span {
     border-radius: 16px;
     padding: 30px;
     margin-bottom: 40px;
+    margin-left: 150px;
+    margin-right: 150px;
+    text-align: center;
 }
 
 #typed {

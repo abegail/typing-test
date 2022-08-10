@@ -1,7 +1,7 @@
 const text = document.querySelector('#untyped');
+const textArray = Array.from(text.textContent);
 const typedText = document.querySelector('#typed');
 const typedArray = [];
-const textArray = Array.from(text.textContent);
 
 window.addEventListener('keydown', checkKey);
 
@@ -33,4 +33,10 @@ function updateDisplay(key) {
     typedArray.push(key);
     text.textContent = textArray.join('');
     typedText.textContent = typedArray.join('');
+
+    if (textArray.length === 0) {
+        const message = document.querySelector('#testDone');
+        message.textContent = "Done!";
+        window.removeEventListener('keydown', checkKey);
+    }
 }

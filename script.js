@@ -7,8 +7,10 @@ let correctKeyStroke = 0;
 let incorrectKeyStroke = 0;
 
 let timerStarted = false;
-let time = 10000;
+let setTime = 60000;
+let time = setTime;
 let countdownTimer;
+let timeOut;
 let wordsTyped = 0;
 
 const message = document.querySelector('#testDone');
@@ -61,13 +63,14 @@ function updateDisplay(key) {
 function displayResults() {
     window.removeEventListener('keydown', checkKey);
     const accuracy = Math.round((correctKeyStroke / (correctKeyStroke + incorrectKeyStroke)) * 100);
-    message.textContent = `Done! Accuracy: ${accuracy}%`;
+    message.textContent = `Accuracy: ${accuracy}%    Speed: ${calculateWPM()} WPM`;
+    timerDisplay.textContent = 'Time\'s up!';
     clearInterval(countdownTimer);
-    calculateWPM();
+    clearTimeout(timeOut);
 }
 
 function timer() {
-    setTimeout(displayResults, time);
+    timeOut = setTimeout(displayResults, time);
 }
 
 function printTimer() {
@@ -80,15 +83,33 @@ function printTimerHelper() {
 }
 
 function calculateWPM() {
+    let punctuation;
     for (i = 0; i < typedArray.length; i++) {
-        if (typedArray[i] === ' ' || typedArray[i] === '.' || typedArray[i] === ',' || typedArray[i] === '?' || typedArray[i] === '!') {
+        console.log(`Current char is ${typedArray[i]}`);
+        if (typedArray[i] === ' ') {
             wordsTyped++
+            punctuation = false;
+            console.log(`Went inside if and incremented`);
+        } else if (typedArray[i] === '.' || typedArray[i] === ',' || typedArray[i] === '?' || typedArray[i] === '!') {
+            wordsTyped++;
+            i++;
+            punctuation = true;
+            console.log(`Went inside else if and incremented`);
         }
-        if(i === typedArray.length - 1) {
+        if(i >= typedArray.length - 1 && punctuation === false) {
             if(textArray[0] === ' ' || textArray[0] === '.' || textArray[0] === ',' || textArray[0] === '?' || textArray[0] === '!') {
                 wordsTyped++;
+                console.log(`Went inside else and incremented`);
             }
         } 
     }
-    console.log(wordsTyped);
+    console.log(`Words typed: ${wordsTyped}`);
+
+    let timeItTook = setTime - time;
+    wpm2 = Math.round((wordsTyped / timeItTook) * 60000);
+
+    console.log(`WPM2: ${wpm2}`);
+
+    let wpm = (wordsTyped * 60000) / (setTime);
+    return wpm2;
 }

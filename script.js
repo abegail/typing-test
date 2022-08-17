@@ -33,9 +33,11 @@ function checkKey(e) {
         playSound(true);
         updateDisplay(e.key);
         correctKeyStroke++;
+        console.log(`Correct key: ${e.key}`);
     } else {
         playSound(false);
         incorrectKeyStroke++;
+        console.log(`Incorrect key: ${e.key}`);
     }
 
     if (textArray.length === 0) displayResults();
@@ -106,10 +108,8 @@ function calculateWPM() {
     console.log(`Words typed: ${wordsTyped}`);
 
     let timeItTook = setTime - time;
-    wpm2 = Math.round((wordsTyped / timeItTook) * 60000);
+    let wpm = Math.round((wordsTyped / timeItTook) * 60000);
 
-    console.log(`WPM2: ${wpm2}`);
-
-    let wpm = (wordsTyped * 60000) / (setTime);
-    return wpm2;
+    console.log(`WPM2: ${wpm}`);
+    return wpm;
 }

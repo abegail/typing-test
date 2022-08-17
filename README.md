@@ -1,1 +1,1 @@
-# typing-test
+Simple typing test project built with JavaScript. Test text is Taylor Swift's lyrics. Not sure whether to call this Typing Swift or Taylor Test :D
